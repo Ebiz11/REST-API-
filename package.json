@@ -1,0 +1,11 @@
+{
+  "name": "ebiz",
+  "version": "1.0.0",
+  "description": "test shwetech",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "ebiz",
+  "license": "ISC"
+}
