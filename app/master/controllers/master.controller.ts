@@ -35,7 +35,11 @@ export default class Master{
                 return;
             }
 
-            callback({status: true, msg: 'topup successfully!'});
+            if(i.results.changedRows < 1){
+                callback({status: false, msg: 'confirm failed, id topup not found!'});
+                return;
+            }
+            callback({status: true, msg: 'confirm successfully!'});
         })
         
     }

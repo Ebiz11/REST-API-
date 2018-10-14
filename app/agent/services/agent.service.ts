@@ -1,8 +1,8 @@
 import connection from "../../connections/mysql.connection";
 
-export default class BuyerService {
+export default class AgentService {
 
-    public buy(data:any, callback:any){
+    public topup(data:any, callback:any){
 
         let query = `
                     INSERT INTO topup (
@@ -38,7 +38,7 @@ export default class BuyerService {
                     JOIN dompet_coin d ON d.user_id = u.user_id
                     WHERE
                         u.user_id = `+data.user_confirm+`
-                    AND u.level = "agent"
+                    AND u.level = "master"
                     `;
 
         connection.dbcoin.query(query, function (error, results, fields) {
