@@ -34,27 +34,21 @@ var App = /** @class */ (function () {
         var router = express_1.Router();
         router.use(bodyParser.urlencoded({ extended: false }));
         router.use(bodyParser.json());
-        // middleware
-        router.use(function (req, res, next) {
-            console.log(req.method, req.url);
-            next();
-        });
-        // 
+        // register
         router.post('/register', function (req, res) {
             _this.register.tambah(req, function (i) {
                 res.send(i);
             });
         });
+        // login
         router.post('/login', function (req, res) {
             _this.login.signin(req, function (i) {
                 res.send(i);
             });
         });
-        // var token = req.headers['x-access-token'];
-        // if (!token) return res.status(401).send({ auth: false, message: 'No token provided.' });
-        // jwt.verify(token, config.secret, function(err:any, decoded:any) {
-        //     res.send({status: true, token: token, data: decoded});
-        // });
+        router.get('/', function (req, res) {
+            res.send('welcome');
+        });
         this.app.use('/agent', agent_routes_1.agentRoutes);
         this.app.use('/master', master_routes_1.masterRoutes);
         this.app.use('/buyer', buyer_routes_1.buyerRoutes);

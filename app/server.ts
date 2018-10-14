@@ -34,31 +34,23 @@ class App {
         router.use(bodyParser.urlencoded({ extended: false }));
         router.use(bodyParser.json());
 
-        // middleware
-        router.use(function(req, res, next) {
-            console.log(req.method, req.url);
-            next(); 
-        });
-        // 
-
+        // register
         router.post('/register', (req: Request, res: Response) => {
             this.register.tambah(req, (i:any) => {
                 res.send(i);
             })
         });
 
+        // login
         router.post('/login', (req: Request, res: Response) => {
             this.login.signin(req, (i:any) => {
                 res.send(i);
             })
         });
 
-        // var token = req.headers['x-access-token'];
-        // if (!token) return res.status(401).send({ auth: false, message: 'No token provided.' });
-            
-        // jwt.verify(token, config.secret, function(err:any, decoded:any) {
-        //     res.send({status: true, token: token, data: decoded});
-        // });
+        router.get('/', (req: Request, res: Response) => {
+            res.send('welcome');
+        });
 
         this.app.use('/agent', agentRoutes);
         this.app.use('/master', masterRoutes);

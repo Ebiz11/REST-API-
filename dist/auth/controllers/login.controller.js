@@ -27,8 +27,8 @@ var Register = /** @class */ (function () {
             }
             var data = {
                 username: result.username,
-                email: req.body.email,
-                level: req.body.level,
+                email: result.email,
+                level: result.level,
             };
             var token = jwt.sign(data, secret_1.default.secret, {
                 expiresIn: 86400

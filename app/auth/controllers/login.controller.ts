@@ -36,10 +36,10 @@ export default class Register{
 
             let data = {
                 username: result.username,
-                email: req.body.email,
-                level: req.body.level,
+                email: result.email,
+                level: result.level,
             }
-
+            
             let token = jwt.sign(data, config.secret, {
                 expiresIn: 86400 
             });
