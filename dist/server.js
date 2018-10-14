@@ -15,11 +15,11 @@ var express_1 = __importStar(require("express"));
 var agent_routes_1 = require("./agent/agent.routes");
 var master_routes_1 = require("./master/master.routes");
 var buyer_routes_1 = require("./buyer/buyer.routes");
-// 
+// *
 // class
 var register_controller_1 = __importDefault(require("./auth/controllers/register.controller"));
 var login_controller_1 = __importDefault(require("./auth/controllers/login.controller"));
-// 
+// *
 var bodyParser = __importStar(require("body-parser"));
 var port = process.env.PORT || 4200;
 var App = /** @class */ (function () {

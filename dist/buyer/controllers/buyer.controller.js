@@ -10,11 +10,10 @@ var Buyer = /** @class */ (function () {
     }
     Buyer.prototype.buy_coin = function (req, data, callback) {
         var _this = this;
-        var id_agent = req.body.agent;
         var insert = {
             user_request: data,
-            user_confirm: id_agent,
-            value: req.body.jml_coin
+            user_confirm: req.body.agent_id,
+            value: req.body.coin
         };
         this.buyerService.cek_level(insert, function (i) {
             if (!i.status) {
@@ -22,7 +21,7 @@ var Buyer = /** @class */ (function () {
                 return;
             }
             if (i.results.length < 1) {
-                callback({ status: false, msg: 'agent not found!' });
+                callback({ status: false, msg: 'data agent tidak ditemukan.' });
                 return;
             }
             _this.buyerService.buy(insert, function (i) {

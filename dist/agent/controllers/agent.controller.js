@@ -10,11 +10,10 @@ var Buyer = /** @class */ (function () {
     }
     Buyer.prototype.topup = function (req, data, callback) {
         var _this = this;
-        var id_master = req.body.master;
         var insert = {
             user_request: data,
-            user_confirm: id_master,
-            value: req.body.jml_coin
+            user_confirm: req.body.master_id,
+            value: req.body.coin
         };
         this.agentService.cek_level(insert, function (i) {
             if (!i.status) {
@@ -22,7 +21,7 @@ var Buyer = /** @class */ (function () {
                 return;
             }
             if (i.results.length < 1) {
-                callback({ status: false, msg: 'master not found!' });
+                callback({ status: false, msg: 'master agent tidak ditemukan.' });
                 return;
             }
             _this.agentService.topup(insert, function (i) {
@@ -40,16 +39,24 @@ var Buyer = /** @class */ (function () {
             topup_id: req.body.topup_id,
             status: req.body.status
         };
+        var status = ["true", "false"];
+        if (status.indexOf(req.body.status) < 0) {
+            callback({ status: false, msg: 'status tidak valid, pilih status true atau false' });
+            return;
+        }
         this.agentService.confirm_topup(update, function (i) {
             if (!i.status) {
                 callback(i);
                 return;
             }
             if (i.results.changedRows < 1) {
-                callback({ status: false, msg: 'confirm failed, id topup not found!' });
+                callback({ status: false, msg: 'tidak ada row yang diupdate.' });
                 return;
             }
-            callback({ status: true, msg: 'confirm successfully!' });
+            if (req.body.status == 'true')
+                callback({ status: true, msg: 'confirm top up successfully!' });
+            if (req.body.status == 'false')
+                callback({ status: true, msg: 'cancel top up successfully!' });
         });
     };
     return Buyer;

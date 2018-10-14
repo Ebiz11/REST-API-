@@ -1,7 +1,4 @@
-
-import config from '../../config/secret';  
 import MasterService from '../services/master.service';
-import moment from 'moment';
 
 export default class Master{
     public masterService:any;
@@ -29,6 +26,12 @@ export default class Master{
             status : req.body.status
         }
 
+        let status = ["true", "false"];
+        if(status.indexOf(req.body.status) < 0) {
+            callback({status: false, msg: 'status tidak valid, pilih status true atau false'});
+            return;
+        }
+
         this.masterService.confirm_topup(update, (i:any) => {
             if(!i.status){
                 callback(i);
@@ -36,10 +39,15 @@ export default class Master{
             }
 
             if(i.results.changedRows < 1){
-                callback({status: false, msg: 'confirm failed, id topup not found!'});
+                callback({status: false, msg: 'tidak ada row yang diupdate.'});
                 return;
             }
-            callback({status: true, msg: 'confirm successfully!'});
+
+            if(req.body.status == 'true')
+                callback({status: true, msg: 'confirm top up successfully!'});
+            if(req.body.status == 'false')
+                callback({status: true, msg: 'cancel top up successfully!'});
+
         })
         
     }

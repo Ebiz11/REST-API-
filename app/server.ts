@@ -4,12 +4,12 @@ import express, { Router, Request, Response  } from 'express';
 import { agentRoutes } from './agent/agent.routes';
 import { masterRoutes } from './master/master.routes';
 import { buyerRoutes } from './buyer/buyer.routes'; 
-// 
+// *
 
 // class
 import Register  from './auth/controllers/register.controller';
 import Login  from './auth/controllers/login.controller';
-// 
+// *
 
 import * as bodyParser from "body-parser";
 

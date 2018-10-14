@@ -1,7 +1,4 @@
-
-import config from '../../config/secret';  
 import BuyerService from '../services/buyer.service';
-import moment from 'moment';
 
 export default class Buyer{
     public buyerService:any;
@@ -11,12 +8,11 @@ export default class Buyer{
     }
 
     public buy_coin(req:any, data:any, callback:any) {
-        let id_agent = req.body.agent;
 
         let insert = {
             user_request: data,
-            user_confirm: id_agent,
-            value: req.body.jml_coin
+            user_confirm: req.body.agent_id,
+            value: req.body.coin
         }
 
         this.buyerService.cek_level(insert, (i:any) => {
@@ -26,7 +22,7 @@ export default class Buyer{
             }
 
             if(i.results.length < 1){
-                callback({status: false, msg: 'agent not found!'});
+                callback({status: false, msg: 'data agent tidak ditemukan.'});
                 return;
             }
 

@@ -23,16 +23,24 @@ var Master = /** @class */ (function () {
             topup_id: req.body.topup_id,
             status: req.body.status
         };
+        var status = ["true", "false"];
+        if (status.indexOf(req.body.status) < 0) {
+            callback({ status: false, msg: 'status tidak valid, pilih status true atau false' });
+            return;
+        }
         this.masterService.confirm_topup(update, function (i) {
             if (!i.status) {
                 callback(i);
                 return;
             }
             if (i.results.changedRows < 1) {
-                callback({ status: false, msg: 'confirm failed, id topup not found!' });
+                callback({ status: false, msg: 'tidak ada row yang diupdate.' });
                 return;
             }
-            callback({ status: true, msg: 'confirm successfully!' });
+            if (req.body.status == 'true')
+                callback({ status: true, msg: 'confirm top up successfully!' });
+            if (req.body.status == 'false')
+                callback({ status: true, msg: 'cancel top up successfully!' });
         });
     };
     return Master;

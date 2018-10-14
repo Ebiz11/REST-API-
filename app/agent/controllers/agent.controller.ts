@@ -9,12 +9,10 @@ export default class Buyer{
     }
 
     public topup(req:any, data:any, callback:any) {
-        let id_master = req.body.master;
-
         let insert = {
             user_request: data,
-            user_confirm: id_master,
-            value: req.body.jml_coin
+            user_confirm: req.body.master_id,
+            value: req.body.coin
         }
 
         this.agentService.cek_level(insert, (i:any) => {
@@ -24,7 +22,7 @@ export default class Buyer{
             }
 
             if(i.results.length < 1){
-                callback({status: false, msg: 'master not found!'});
+                callback({status: false, msg: 'master agent tidak ditemukan.'});
                 return;
             }
 
@@ -33,7 +31,7 @@ export default class Buyer{
                     callback(i);
                     return;
                 }
-    
+                
                 callback({status: true, msg: 'topup successfully!'});
             })
                 
@@ -48,6 +46,12 @@ export default class Buyer{
             status : req.body.status
         }
 
+        let status = ["true", "false"];
+        if(status.indexOf(req.body.status) < 0) {
+            callback({status: false, msg: 'status tidak valid, pilih status true atau false'});
+            return;
+        }
+
         this.agentService.confirm_topup(update, (i:any) => {
             if(!i.status){
                 callback(i);
@@ -55,10 +59,14 @@ export default class Buyer{
             }
 
             if(i.results.changedRows < 1){
-                callback({status: false, msg: 'confirm failed, id topup not found!'});
+                callback({status: false, msg: 'tidak ada row yang diupdate.'});
                 return;
             }
-            callback({status: true, msg: 'confirm successfully!'});
+
+            if(req.body.status == 'true')
+                callback({status: true, msg: 'confirm top up successfully!'});
+            if(req.body.status == 'false')
+                callback({status: true, msg: 'cancel top up successfully!'});
         })
         
     }
