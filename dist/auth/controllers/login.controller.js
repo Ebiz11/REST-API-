@@ -36,6 +36,10 @@ var Register = /** @class */ (function () {
             callback({ status: true, token: token });
         });
     };
+    Register.prototype.signout = function (callback) {
+        callback({ status: true, token: null });
+        // set null token di client
+    };
     return Register;
 }());
 exports.default = Register;

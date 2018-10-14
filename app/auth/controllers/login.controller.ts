@@ -49,4 +49,9 @@ export default class Register{
         })
         
     }
+
+    public signout (callback:any) {
+        callback({status: true, token: null});
+        // set null token di client
+    }
 }
