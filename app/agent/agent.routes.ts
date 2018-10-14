@@ -60,6 +60,20 @@ router.post('/topup-coin', (req: Request, res: Response) => {
     
 });
 
+router.get('/list-topup', (req: Request, res: Response) => {
+    const jwt = require('jsonwebtoken');
+    let token = req.headers['token'];
+
+    jwt.verify(token, config.secret, function(err:any, decoded:any) {
+        
+        agent.list_topup(decoded.user_id, (i:any) => {
+            res.send(i);
+        })
+        
+    }); 
+    
+});
+
 router.post('/confirm-topup', (req: Request, res: Response) => {
     const jwt = require('jsonwebtoken');
     let token = req.headers['token'];

@@ -52,6 +52,15 @@ router.post('/topup-coin', function (req, res) {
         });
     });
 });
+router.get('/list-topup', function (req, res) {
+    var jwt = require('jsonwebtoken');
+    var token = req.headers['token'];
+    jwt.verify(token, secret_1.default.secret, function (err, decoded) {
+        agent.list_topup(decoded.user_id, function (i) {
+            res.send(i);
+        });
+    });
+});
 router.post('/confirm-topup', function (req, res) {
     var jwt = require('jsonwebtoken');
     var token = req.headers['token'];

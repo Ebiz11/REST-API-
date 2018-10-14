@@ -33,6 +33,15 @@ var Buyer = /** @class */ (function () {
             });
         });
     };
+    Buyer.prototype.list_topup = function (data, callback) {
+        this.agentService.list_topup(data, function (i) {
+            if (!i.status) {
+                callback(i);
+                return;
+            }
+            callback({ status: true, data: i.results });
+        });
+    };
     Buyer.prototype.confirm_topup = function (req, data, callback) {
         var update = {
             user_id: data,
@@ -45,6 +54,7 @@ var Buyer = /** @class */ (function () {
             return;
         }
         this.agentService.confirm_topup(update, function (i) {
+            console.log(i);
             if (!i.status) {
                 callback(i);
                 return;

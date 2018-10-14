@@ -39,6 +39,18 @@ export default class Buyer{
         
     }
 
+    public list_topup(data:any, callback:any) {
+        this.agentService.list_topup(data, (i:any) => {
+            if(!i.status){
+                callback(i);
+                return;
+            }
+
+            callback({status: true, data: i.results});
+        })
+        
+    }
+
     public confirm_topup(req:any, data:any, callback:any) {
         let update = {
             user_id : data,
@@ -53,6 +65,8 @@ export default class Buyer{
         }
 
         this.agentService.confirm_topup(update, (i:any) => {
+            console.log(i);
+            
             if(!i.status){
                 callback(i);
                 return;

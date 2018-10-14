@@ -25,8 +25,18 @@ var AgentService = /** @class */ (function () {
                 callback({ status: true, results: results });
         });
     };
+    AgentService.prototype.list_topup = function (data, callback) {
+        var query = "\n                    SELECT\n                        *\n                    FROM\n                        topup\n                    WHERE\n                        user_confirm = " + data;
+        mysql_connection_1.default.dbcoin.query(query, function (error, results, fields) {
+            if (error)
+                callback({ status: false, error: error.sqlMessage });
+            else
+                callback({ status: true, results: results });
+        });
+    };
     AgentService.prototype.confirm_topup = function (data, callback) {
         var query = "\n                    UPDATE topup\n                    SET status = \"" + data.status + "\"\n                    WHERE\n                        user_confirm = " + data.user_id + "\n                    AND topup_id = " + data.topup_id;
+        console.log(query);
         mysql_connection_1.default.dbcoin.query(query, function (error, results, fields) {
             if (error)
                 callback({ status: false, error: error.sqlMessage });
