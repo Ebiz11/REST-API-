@@ -35,13 +35,24 @@ var AgentService = /** @class */ (function () {
         });
     };
     AgentService.prototype.confirm_topup = function (data, callback) {
-        var query = "\n                    UPDATE topup\n                    SET status = \"" + data.status + "\"\n                    WHERE\n                        user_confirm = " + data.user_id + "\n                    AND topup_id = " + data.topup_id;
-        console.log(query);
-        mysql_connection_1.default.dbcoin.query(query, function (error, results, fields) {
+        var cek_dompet = "\n                            SELECT\n                            IF (\n                                d.coin_value > t.value,\n                                'true',\n                                'false'\n                            ) AS status\n                            FROM\n                                dompet_coin d\n                            JOIN topup t ON d.user_id = t.user_confirm\n                            WHERE\n                                d.user_id = " + data.user_id;
+        mysql_connection_1.default.dbcoin.query(cek_dompet, function (error, results, fields) {
             if (error)
                 callback({ status: false, error: error.sqlMessage });
-            else
-                callback({ status: true, results: results });
+            else {
+                if (results[0].status == 'true') {
+                    var query = "\n                            UPDATE topup\n                            SET status = \"" + data.status + "\"\n                            WHERE\n                                user_confirm = " + data.user_id + "\n                            AND topup_id = " + data.topup_id;
+                    mysql_connection_1.default.dbcoin.query(query, function (error, results, fields) {
+                        if (error)
+                            callback({ status: false, error: error.sqlMessage });
+                        else
+                            callback({ status: true, results: results });
+                    });
+                }
+                else {
+                    callback({ status: false, msg: 'saldo anda tidak mencukupi, silahkan topup ke master agent.' });
+                }
+            }
         });
     };
     return AgentService;
