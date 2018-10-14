@@ -66,7 +66,6 @@ router.post('/confirm-topup', (req: Request, res: Response) => {
 
     jwt.verify(token, config.secret, function(err:any, decoded:any) {
         
-        
         master.confirm_topup(req, decoded.user_id, (i:any) => {
             res.send(i);
         })
