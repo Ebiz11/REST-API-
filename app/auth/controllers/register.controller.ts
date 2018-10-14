@@ -8,7 +8,6 @@ export default class Register{
 
     constructor() {
         this.registerService = new RegisterService();
-        console.log('class register');
     }
 
     public tambah(req:any, callback:any) {
@@ -25,9 +24,6 @@ export default class Register{
             level: req.body.level,
             created_date: moment().format('YYYY-MM-DD HH:mm:ss')
         }
-
-        console.log(data);
-        
 
         this.registerService.create_user(data, (i:any) => {
             if(!i.status){

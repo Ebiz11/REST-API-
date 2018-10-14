@@ -8,6 +8,7 @@ import { buyerRoutes } from './buyer/buyer.routes';
 
 // class
 import Register  from './auth/controllers/register.controller';
+import Login  from './auth/controllers/login.controller';
 // 
 
 import * as bodyParser from "body-parser";
@@ -18,10 +19,12 @@ class App {
 
     public app: express.Application;
     public register:any;
+    public login:any;
 
     constructor () {
         this.app = express()
         this.register = new Register();
+        this.login = new Login();
         this.mountRoutes()
     }
 
@@ -44,7 +47,14 @@ class App {
             })
         });
 
-                    
+        router.post('/login', (req: Request, res: Response) => {
+            this.login.signin(req, (i:any) => {
+                res.send(i);
+            })
+        });
+
+        // var token = req.headers['x-access-token'];
+        // if (!token) return res.status(401).send({ auth: false, message: 'No token provided.' });
             
         // jwt.verify(token, config.secret, function(err:any, decoded:any) {
         //     res.send({status: true, token: token, data: decoded});

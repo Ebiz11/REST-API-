@@ -1,4 +1,3 @@
-import moment from 'moment';
 import connection from "../../connections/mysql.connection";
 
 export default class RegisterService {

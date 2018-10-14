@@ -18,6 +18,7 @@ var buyer_routes_1 = require("./buyer/buyer.routes");
 // 
 // class
 var register_controller_1 = __importDefault(require("./auth/controllers/register.controller"));
+var login_controller_1 = __importDefault(require("./auth/controllers/login.controller"));
 // 
 var bodyParser = __importStar(require("body-parser"));
 var port = process.env.PORT || 4200;
@@ -25,6 +26,7 @@ var App = /** @class */ (function () {
     function App() {
         this.app = express_1.default();
         this.register = new register_controller_1.default();
+        this.login = new login_controller_1.default();
         this.mountRoutes();
     }
     App.prototype.mountRoutes = function () {
@@ -43,6 +45,13 @@ var App = /** @class */ (function () {
                 res.send(i);
             });
         });
+        router.post('/login', function (req, res) {
+            _this.login.signin(req, function (i) {
+                res.send(i);
+            });
+        });
+        // var token = req.headers['x-access-token'];
+        // if (!token) return res.status(401).send({ auth: false, message: 'No token provided.' });
         // jwt.verify(token, config.secret, function(err:any, decoded:any) {
         //     res.send({status: true, token: token, data: decoded});
         // });
