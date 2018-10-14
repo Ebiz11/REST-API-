@@ -30,8 +30,6 @@ export default class MasterService {
                     AND topup_id = `+data.topup_id;
 
         connection.dbcoin.query(query, function (error, results, fields) {
-            console.log(results);
-            
             if(error)
                 callback({status: false, error: error.sqlMessage});
             else

@@ -38,8 +38,28 @@ export default class Buyer{
             })
                 
         })
+        
+    }
 
+    public confirm_topup(req:any, data:any, callback:any) {
+        let update = {
+            user_id : data,
+            topup_id : req.body.topup_id,
+            status : req.body.status
+        }
 
+        this.agentService.confirm_topup(update, (i:any) => {
+            if(!i.status){
+                callback(i);
+                return;
+            }
+
+            if(i.results.changedRows < 1){
+                callback({status: false, msg: 'confirm failed, id topup not found!'});
+                return;
+            }
+            callback({status: true, msg: 'confirm successfully!'});
+        })
         
     }
 }

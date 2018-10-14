@@ -19,7 +19,6 @@ var MasterService = /** @class */ (function () {
     MasterService.prototype.confirm_topup = function (data, callback) {
         var query = "\n                    UPDATE topup\n                    SET status = \"" + data.status + "\"\n                    WHERE\n                        user_confirm = " + data.user_id + "\n                    AND topup_id = " + data.topup_id;
         mysql_connection_1.default.dbcoin.query(query, function (error, results, fields) {
-            console.log(results);
             if (error)
                 callback({ status: false, error: error.sqlMessage });
             else

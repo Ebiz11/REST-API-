@@ -34,6 +34,24 @@ var Buyer = /** @class */ (function () {
             });
         });
     };
+    Buyer.prototype.confirm_topup = function (req, data, callback) {
+        var update = {
+            user_id: data,
+            topup_id: req.body.topup_id,
+            status: req.body.status
+        };
+        this.agentService.confirm_topup(update, function (i) {
+            if (!i.status) {
+                callback(i);
+                return;
+            }
+            if (i.results.changedRows < 1) {
+                callback({ status: false, msg: 'confirm failed, id topup not found!' });
+                return;
+            }
+            callback({ status: true, msg: 'confirm successfully!' });
+        });
+    };
     return Buyer;
 }());
 exports.default = Buyer;

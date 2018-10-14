@@ -52,4 +52,13 @@ router.post('/topup-coin', function (req, res) {
         });
     });
 });
+router.post('/confirm-topup', function (req, res) {
+    var jwt = require('jsonwebtoken');
+    var token = req.headers['token'];
+    jwt.verify(token, secret_1.default.secret, function (err, decoded) {
+        agent.confirm_topup(req, decoded.user_id, function (i) {
+            res.send(i);
+        });
+    });
+});
 exports.agentRoutes = router;
