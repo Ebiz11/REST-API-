@@ -38,6 +38,7 @@ export default class Register{
                 username: result.username,
                 email: result.email,
                 level: result.level,
+                user_id: result.user_id
             }
             
             let token = jwt.sign(data, config.secret, {

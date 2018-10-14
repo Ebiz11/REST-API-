@@ -32,6 +32,7 @@ export default class Register{
             }
                 
             delete data['password'];
+            Object.assign(data, { user_id: i.results.insertId});
 
             let token = jwt.sign(data, config.secret, {
                 expiresIn: 86400 

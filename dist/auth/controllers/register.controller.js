@@ -27,6 +27,7 @@ var Register = /** @class */ (function () {
                 return;
             }
             delete data['password'];
+            Object.assign(data, { user_id: i.results.insertId });
             var token = jwt.sign(data, secret_1.default.secret, {
                 expiresIn: 86400
             });
